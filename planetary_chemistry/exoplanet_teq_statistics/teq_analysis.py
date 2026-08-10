@@ -7,24 +7,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------------------------------------------------------------------------
-# Data path handling
+# Module-relative paths: figures are always written to the module's figures/
+# directory, regardless of the cwd the script is invoked from.
 # ---------------------------------------------------------------------------
+MODULE_DIR = Path(__file__).resolve().parent
+FIG_DIR = MODULE_DIR / "figures"
+FIG_DIR.mkdir(parents=True, exist_ok=True)
+
 # The raw IAC ExoAtmospheres download is NOT redistributed with this
 # repository (external database snapshot; see README.md for provenance).
 # The script therefore requires the user to supply the dataset; it never
 # silently substitutes other data.
-DEFAULT_DATA = Path(__file__).resolve().parent / "iac_exoplanet_atmospheres-20260624.csv"
-
 parser = argparse.ArgumentParser(
     description="Equilibrium-temperature statistics from the IAC ExoAtmospheres "
                 "database (coursework analysis).")
-parser.add_argument("--csv", type=Path, default=DEFAULT_DATA,
+parser.add_argument("--csv", type=Path, required=True,
                     help="Path to the IAC ExoAtmospheres CSV download "
-                         "(not redistributed with this repository)")
+                         "(required; the dataset is not redistributed with this repository)")
 args = parser.parse_args()
 
 csv_path = args.csv
 if not csv_path.exists():
+    print(f"ERROR: input CSV not found: {csv_path}", file=sys.stderr)
     print("Input dataset is not redistributed with this repository.", file=sys.stderr)
     print("See README.md for data provenance and expected input schema/path.", file=sys.stderr)
     sys.exit(1)
@@ -64,7 +68,7 @@ plt.xlabel("Equilibrium temperature Teq (K)")
 plt.ylabel("Number of planets")
 plt.title("Distribution of Teq in the IAC ExoAtmospheres database")
 plt.tight_layout()
-plt.savefig("fig1_teq_hist.png", dpi=300)
+plt.savefig(FIG_DIR / "teq_histogram.png", dpi=300)
 
 # 6. CDF
 x = np.sort(teq)
@@ -75,7 +79,7 @@ plt.xlabel("Equilibrium temperature Teq (K)")
 plt.ylabel("Cumulative fraction")
 plt.title("CDF of Teq")
 plt.tight_layout()
-plt.savefig("fig2_teq_cdf.png", dpi=300)
+plt.savefig(FIG_DIR / "teq_cdf.png", dpi=300)
 
 # 7. Teq–radius 散点图
 mask = sub['radius'].notna()
@@ -87,4 +91,4 @@ plt.xlabel("Equilibrium temperature Teq (K)")
 plt.ylabel("Planet radius (R_earth)")
 plt.title("Teq vs planet radius")
 plt.tight_layout()
-plt.savefig("fig3_teq_radius.png", dpi=300)
+plt.savefig(FIG_DIR / "teq_radius.png", dpi=300)

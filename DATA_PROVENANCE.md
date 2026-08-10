@@ -68,6 +68,8 @@ These materials remain in the private source archives.
   (`planetary_chemistry/exoplanet_teq_statistics/`) uses the **IAC
   ExoAtmospheres** database (external public database).
 - The source snapshot was downloaded in June 2026.
+- Source: IAC ExoAtmospheres database, Instituto de Astrofísica de Canarias,
+  accessed June 2026.
 - The external raw CSV remains in the private source archive and is **not
   redistributed** in this repository.
 - The report, script, and figures are user-authored coursework artifacts;
@@ -91,8 +93,10 @@ These materials remain in the private source archives.
 
 ## License boundary
 
-- The MIT License (see `LICENSE`) applies to user-authored source code only
-  unless a file explicitly states otherwise.
+- The MIT License (see `LICENSE`) applies only to user-authored source code
+  and computational input files unless a file explicitly states otherwise; it
+  does not apply to coursework reports, user-generated scientific figures,
+  datasets, or third-party/course-provided material.
 - Reports and user-generated figures remain copyright Xinyu Du unless
   otherwise noted.
 - Course-provided datasets and third-party materials retain their original

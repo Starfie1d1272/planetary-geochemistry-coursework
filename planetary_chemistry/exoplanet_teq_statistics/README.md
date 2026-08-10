@@ -155,3 +155,22 @@ $$
 $$
 
 但若进一步要求微生物保持活性并长期生存，三颗天体均不乐观。
+
+---
+
+## 复现说明（Reproducibility）
+
+`teq_analysis.py` 需要外部 IAC ExoAtmospheres 数据库下载文件作为输入。**The external CSV is not redistributed**；provenance 见文件头与 [DATA_PROVENANCE.md](../../DATA_PROVENANCE.md)。
+
+预期输入 CSV schema：
+
+- delimiter: `;`
+- required columns: `name`, `temp_calculated`, `type`, `radius`, `mass`
+
+运行方式（数据文件缺失时脚本会输出提示并以非零状态退出，不做 silent fallback）：
+
+```bash
+python teq_analysis.py --csv /path/to/iac_exoplanet_atmospheres.csv
+```
+
+图形输出写入模块内 `figures/`（`teq_histogram.png`、`teq_cdf.png`、`teq_radius.png`）。

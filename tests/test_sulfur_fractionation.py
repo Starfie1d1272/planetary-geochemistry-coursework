@@ -11,9 +11,14 @@ import isotope_fractionation as sf  # noqa: E402
 
 MODULE = Path(__file__).resolve().parents[1] / "isotope_geochemistry" / "sulfur_fractionation"
 
-# Baseline at 298 K from the tracked results (per mil, 1000*ln(beta)).
-BASELINE_298K = {"H2S": 11.034, "SO2": 41.124, "SO4_2-": 66.567}
+# Canonical rounded 298 K values in the publication layer.
+BASELINE_298K = {"H2S": 11.033, "SO2": 41.124, "SO4_2-": 66.567}
 TOL_PERMIL = 0.01
+
+# Frequency-product diagnostic convention R_f = prod(nu_34S / nu_32S),
+# locked from the tracked Gaussian-derived dataset (heavy/light convention).
+DIAGNOSTIC = {"H2S": 0.997320, "SO2": 0.972770, "SO4_2-": 0.941830}
+DIAG_TOL = 1e-6
 
 
 @pytest.fixture(scope="module")
@@ -34,6 +39,16 @@ def test_298k_baseline(freqs):
         ln10b = 1000.0 * math.log(sf.calc_beta(freqs[mol]["32S"], freqs[mol]["34S"], 298))
         assert abs(ln10b - expected) <= TOL_PERMIL, \
             f"{mol} 298K baseline: {ln10b:.3f} vs expected {expected:.3f}"
+
+
+def test_frequency_product_diagnostic_convention(freqs):
+    """Lock the heavy/light convention R_f = prod(nu(34S)/nu(32S)) of the
+    frequency-product diagnostic (first-order self-consistency check)."""
+    for mol, expected in DIAGNOSTIC.items():
+        got = sf.frequency_product_diagnostic(freqs[mol]["32S"], freqs[mol]["34S"])
+        assert abs(got - expected) <= DIAG_TOL, \
+            f"{mol} diagnostic {got:.6f} != expected {expected:.6f} " \
+            f"(R_f = prod(nu_34S / nu_32S))"
 
 
 def test_tracked_results_consistency(freqs):

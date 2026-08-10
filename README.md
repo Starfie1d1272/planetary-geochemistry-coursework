@@ -50,7 +50,7 @@ Analytical geochemistry (地球化学分析技术 laboratory course):
 
 ## 3. Computational reproducibility
 
-The sulfur-isotope module (`isotope_geochemistry/sulfur_fractionation/`) is fully scripted:
+The sulfur-isotope post-processing workflow (`isotope_geochemistry/sulfur_fractionation/`) is fully scripted:
 
 ```bash
 python isotope_geochemistry/sulfur_fractionation/scripts/isotope_fractionation.py            # recompute results + figure
@@ -115,8 +115,8 @@ tests/
 
 ## 7. License
 
-The MIT License applies to user-authored source code only unless a file explicitly states otherwise.
+The repository uses a mixed-provenance licensing model.
 
-Reports and user-generated figures remain copyright Xinyu Du unless otherwise noted.
+The MIT License applies only to user-authored source code and computational input files unless otherwise stated. Coursework reports and user-generated scientific figures remain copyright Xinyu Du. Datasets and third-party/course materials retain their original provenance.
 
-Course-provided datasets and third-party materials retain their original provenance and are not relicensed under MIT.
+See [LICENSE](LICENSE) and [DATA_PROVENANCE.md](DATA_PROVENANCE.md).
