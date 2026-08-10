@@ -1,0 +1,12 @@
+%chk=SO2.chk
+%nprocshared=8
+%mem=8GB
+#p opt freq b3lyp/6-31g(d) int=ultrafine
+
+SO2 opt+freq (32S) - B3LYP/6-31G(d)
+
+0 1
+ S                   0.00000000    0.00000000    0.31730000
+ O                   0.00000000    1.26570000   -0.15870000
+ O                  -0.00000000   -1.26570000   -0.15870000
+
